@@ -8,7 +8,7 @@ class Thing {
     }
 
     isColliding(obj) {
-        return areColliding(this.x, this.y, this.width, this. height, obj.x, obj.y, obj.width, obj.height);
+        return this != obj && areColliding(this.x, this.y, this.width, this. height, obj.x, obj.y, obj.width, obj.height);
     }
 
    getOverlapVector(obj) {
@@ -42,21 +42,6 @@ class Thing {
         }
     }
 
-    movableCollision(elem) {
-        if(this != elem) {
-            if(this.isColliding(elem)) {
-                let overlap = this.getOverlapVector(elem);
-
-                if (overlap.x) {
-                    if (this.x > elem.x) this.x = elem.x + elem.width + 0.01;
-                    else  this.x = elem.x - this.width - 0.01;
-                } else {
-                    if (this.y > elem.y) this.y = elem.y + elem.height + 0.01;
-                    else  this.y = elem.y - this.height - 0.01;
-                }
-            }
-        }
-    }
 }
 
 
@@ -66,8 +51,8 @@ class Unmovable extends Thing {
         this.type="unmovable";
     }
 
-    update(arrObjects) {
-        arrObjects.forEach(elem => {
+    update(level) {
+        level.objects.forEach(elem => {
             if(elem.type == "player")
                 this.unmovableCollision(elem);
         });
@@ -81,31 +66,29 @@ class Movable extends Thing {
         this.type="movable";
     }
 
-    update(arrObjects) {
+    update(level) {
         this.madeBoxCollision = false;
-        arrObjects.forEach(elem => {
-            if(this != elem) {
-                if(this.isColliding(elem)) {
-                    let overlap = this.getOverlapVector(elem);
-                    
-                    if (this.madeBoxCollision) this.unmovableCollision(elem);
-                    else {
-                        if (overlap.x) {
-                            if (this.x > elem.x) {
-                                this.x = elem.x + elem.width + 0.01;
-                            } else this.x = elem.x - this.width - 0.01;
+        level.objects.forEach(elem => {
+            if(this.isColliding(elem)) {
+                let overlap = this.getOverlapVector(elem);
+                
+                if (this.madeBoxCollision) this.unmovableCollision(elem);
+                else {
+                    if (overlap.x) {
+                        if (this.x > elem.x) {
+                            this.x = elem.x + elem.width + 0.01;
+                        } else this.x = elem.x - this.width - 0.01;
 
-                        } else {
-                            if (this.y > elem.y) {
-                                this.y = elem.y + elem.height + 0.01;
-                            } else this.y = elem.y - this.height - 0.01;
-                        }
-
-                        if(this.type != "player") {
-                            this.madeBoxCollision = true;
-                        }
-                        
+                    } else {
+                        if (this.y > elem.y) {
+                            this.y = elem.y + elem.height + 0.01;
+                        } else this.y = elem.y - this.height - 0.01;
                     }
+
+                    if(this.type != "player") {
+                        this.madeBoxCollision = true;
+                    }
+                    
                 }
             }
         });
@@ -144,7 +127,7 @@ class Entity extends Thing{
         return false;
     }
 
-    update(arrObjects) {
+    update(level) {
         if(this.velocity - this.FRICTION > 0)  this.velocity -= this.FRICTION;
         else this.velocity = 0;
 
@@ -223,9 +206,9 @@ class ChangableState extends Thing {
 
     draw() {
         if (this.state) {
-            ctx.drawImage(this.img, this.x, this.y, this,width, this.height);
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         } else {
-            ctx.drawImage(this.img_alt, this.x, this.y, this,width, this.height);
+            ctx.drawImage(this.img_alt, this.x, this.y, this.width, this.height);
         }
     }
 }
@@ -239,15 +222,15 @@ class Spike extends ChangableState {
         this.cooldown = cooldown;
     }
 
-    update(arrObjects) {
+    update(level) {
         this.updates++;
         
-        if(updates % cooldown == 0)
+        if(this.updates % this.cooldown == 0)
             this.changeState();
 
-        arrObjects.forEach((elem, index) => {
+        level.objects.forEach((elem, index) => {
             if(this.isColliding(elem)) {
-                if(this.state)  arrObjects.splice(index, 1);
+                if(this.state)  level.objects.splice(index, 1);
             }
         });
         
@@ -255,25 +238,118 @@ class Spike extends ChangableState {
 }
 
 
+class Item extends Thing {
+    constructor(x, y, width, height, img) {
+        super(x, y, width, height, img);
+        this.type = "item";
+    }
 
-let levelObjects = [];
+    update(level) {
+        let player = level.objects[level.objects.length - 1];
+        if(player.type == "player") {
+            if(this.isColliding(player)) {
+                let index = level.objects.indexOf(this);
 
-levelObjects[0] = [
-    new Unmovable(200, 100, 70, 70, loadImage("./game/images/box.png")),
-    new Unmovable(200, 240, 70, 70, loadImage("./game/images/box.png")),
-    new Movable(300, 100, 70, 70, loadImage("./game/images/box.png")),
-    new Movable(400, 100, 70, 70, loadImage("./game/images/box.png")),
-    new Movable(300, 100, 70, 70, loadImage("./game/images/box.png")),
-    new Player(100, 100, 70, 70, loadImage("./game/images/player.png"), 0, 2),
-];
+                if(index != -1) {
+                    level.objects.splice(index, 1);
+                    level.items--;
+                }
+
+                // level.objects = level.objects.filter(e => e !== this);
+            }
+        }
+    }
+}
+
+
+
+class Level {
+    constructor(levelNumber) {
+        this.objects = [];
+        this.items = 0;
+        this.levelNumber = levelNumber;
+    }
+
+    addUnmovable(x, y, width, height, img_src) {
+        this.objects.push(new Unmovable(x, y, width, height, loadImage(img_src)));
+    } 
+
+    addMovable(x, y, width, height, img_src) {
+        this.objects.push(new Movable(x, y, width, height, loadImage(img_src)));
+    }
+    
+    addSpike(x, y, width, height, imgSrc_on, imgSrc_off, cooldown=300) {
+        this.objects.push(new Spike(x, y, width, height, loadImage(imgSrc_on), loadImage(imgSrc_off), cooldown));
+    }
+
+    addItem(x, y, width, height, img_src) {
+        this.objects.push(new Item(x, y, width, height, loadImage(img_src)));
+        this.items++;
+    }
+    
+    addPlayer(x, y, width, height, img_src, direction=0, maxSpeed=2){
+        this.objects.push(new Player(x, y, width, height, loadImage(img_src), direction, maxSpeed));
+    }
+
+    clear() {
+        this.items = 0;
+        this.objects = [];
+    }
+
+    ableToFinish() {
+        return items == 0;
+    }
+
+    update() {
+        this.objects.forEach(elem => {
+            //console.log(elem.type);
+            elem.update(this)
+        });
+       // console.log("\n\n");
+    }
+
+    draw() {
+        this.objects.forEach(elem => elem.draw());
+    }
+}
+
+
+function levelSetup(levelNumber) {
+    let level = new Level(levelNumber)
+    switch (levelNumber) {
+        case 0:
+            level.addUnmovable(200, 100, 70, 70, "./game/images/box.png");
+            level.addUnmovable(200, 240, 70, 70, "./game/images/box.png");
+
+            level.addMovable(300, 100, 70, 70, "./game/images/box.png");
+            level.addMovable(400, 100, 70, 70, "./game/images/box.png");
+            level.addMovable(300, 100, 70, 70, "./game/images/box.png");
+
+            level.addItem(500, 190, 30, 30, "./game/images/egg.png");
+            
+            level.addSpike(400, 200, 70, 70, "./game/images/spike-on.png", "./game/images/spike-off.png", 300);
+            
+            level.addPlayer(100, 100, 70, 70, "./game/images/player.png");
+
+            break;
+    }
+
+    return level;
+}
+
+
+
+let level = levelSetup(0);
+
+console.table(level);
 
 function update() {
-    levelObjects[0].forEach(elem => elem.update(levelObjects[0]))
+    level.update()
 }
 
 
 function draw() {
-    levelObjects[0].forEach(elem => elem.draw());
+    level.draw();
 }
 
 
