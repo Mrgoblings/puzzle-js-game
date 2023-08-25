@@ -112,7 +112,7 @@ class Entity extends Thing{
 
     draw() {
         ctx.save();
-
+        
         ctx.translate(this.x + this.width/2, this.y + this.height/2);
         ctx.rotate(this.direction + Math.PI / 2);
 
@@ -120,7 +120,7 @@ class Entity extends Thing{
 
         ctx.restore();
 
-        ctx.fillRect(this.x, this.y, 10, 10)
+        // ctx.fillRect(this.x, this.y, 10, 10)
     }
 
     isMoveOn() { // TO OVERWRITE
@@ -230,10 +230,9 @@ class Spike extends ChangableState {
 
         level.objects.forEach((elem, index) => {
             if(this.isColliding(elem)) {
-                if(this.state)  level.objects.splice(index, 1);
+                if(this.state)  level.reset();
             }
         });
-        
     }
 }
 
@@ -254,20 +253,37 @@ class Item extends Thing {
                     level.objects.splice(index, 1);
                     level.items--;
                 }
-
-                // level.objects = level.objects.filter(e => e !== this);
             }
         }
     }
 }
 
 
+class FinishLine extends Thing {
+    constructor(x, y, width, height, img) {
+        super(x, y, width, height, img);
+        this.type = "finishLine";
+    }
+
+    update(level) {
+        let player = level.objects[level.objects.length - 1];
+        if(player.type == "player") {
+            if(this.isColliding(player)) {
+                console.log("yoooo");
+                level.next();
+            }
+        }
+    }
+}
+
 
 class Level {
-    constructor(levelNumber) {
+    constructor(levelNumber=0) {
         this.objects = [];
         this.items = 0;
         this.levelNumber = levelNumber;
+
+        this.setup(this.levelNumber);
     }
 
     addUnmovable(x, y, width, height, img_src) {
@@ -287,6 +303,10 @@ class Level {
         this.items++;
     }
     
+    addFinishLine(x, y, width, height, img_src){
+        this.objects.push(new FinishLine(x, y, width, height, loadImage(img_src)));
+    }
+    
     addPlayer(x, y, width, height, img_src, direction=0, maxSpeed=2){
         this.objects.push(new Player(x, y, width, height, loadImage(img_src), direction, maxSpeed));
     }
@@ -297,49 +317,57 @@ class Level {
     }
 
     ableToFinish() {
-        return items == 0;
+        return this.items == 0;
     }
 
     update() {
-        this.objects.forEach(elem => {
-            //console.log(elem.type);
-            elem.update(this)
-        });
-       // console.log("\n\n");
+        this.objects.forEach(elem => elem.update(this));
     }
 
     draw() {
         this.objects.forEach(elem => elem.draw());
     }
-}
 
-
-function levelSetup(levelNumber) {
-    let level = new Level(levelNumber)
-    switch (levelNumber) {
-        case 0:
-            level.addUnmovable(200, 100, 70, 70, "./game/images/box.png");
-            level.addUnmovable(200, 240, 70, 70, "./game/images/box.png");
-
-            level.addMovable(300, 100, 70, 70, "./game/images/box.png");
-            level.addMovable(400, 100, 70, 70, "./game/images/box.png");
-            level.addMovable(300, 100, 70, 70, "./game/images/box.png");
-
-            level.addItem(500, 190, 30, 30, "./game/images/egg.png");
-            
-            level.addSpike(400, 200, 70, 70, "./game/images/spike-on.png", "./game/images/spike-off.png", 300);
-            
-            level.addPlayer(100, 100, 70, 70, "./game/images/player.png");
-
-            break;
+    reset() {
+        this.clear();
+        this.setup(this.levelNumber);
     }
 
-    return level;
+    next() {
+        if(!this.ableToFinish()) return;
+
+        this.levelNumber++;
+        this.reset();
+    }
+
+    setup(levelNumber) {
+        switch (levelNumber) {
+            case 0:
+                this.addUnmovable(200, 100, 70, 70, "./game/images/box.png");
+                this.addUnmovable(200, 240, 70, 70, "./game/images/box.png");
+
+                this.addMovable(300, 100, 70, 70, "./game/images/box.png");
+                this.addMovable(400, 100, 70, 70, "./game/images/box.png");
+                this.addMovable(300, 100, 70, 70, "./game/images/box.png");
+
+                this.addItem(500, 190, 30, 30, "./game/images/egg.png");
+                
+                this.addSpike(400, 200, 70, 70, "./game/images/spike-on.png", "./game/images/spike-off.png", 300);
+                
+                this.addFinishLine(600, 290, 70, 70, "./game/images/flag.png");
+                
+                this.addPlayer(100, 100, 70, 70, "./game/images/player.png");
+
+                break;
+        }
+    }       
 }
 
 
 
-let level = levelSetup(0);
+
+document.title = "Make the Cake"
+let level = new Level(0);
 
 console.table(level);
 
@@ -349,8 +377,17 @@ function update() {
 
 
 function draw() {
+    let player = level.objects[level.objects.length - 1];
+    ctx.translate((canvas.width - player.width)/2 - player.x, (canvas.height - player.height)/2 - player.y);
+
     level.draw();
+
+    ctx.translate(-((canvas.width - player.width)/2 - player.x), -((canvas.height - player.height)/2 - player.y));
 }
 
+
+function mouseUp() {
+    console.log(mouseX, mouseY);
+} 
 
 
