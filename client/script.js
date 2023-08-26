@@ -60,7 +60,7 @@ window.addEventListener('keydown', e => {
 
 
 // functions draw and update
-var draw, update;
+var draw;
 
 // Redraw will be executed many times
 
@@ -75,9 +75,9 @@ function redraw() {
   ctx.font = "10px Arial";
   ctx.fillStyle = "blue";
   ctx.textBaseline = "top";
- 
-  if(draw)  draw();                
   
+  if(draw)  draw();   
+    
   reqAnimationFrame(redraw);
 };
 

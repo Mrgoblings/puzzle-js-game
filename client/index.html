@@ -3,13 +3,39 @@
   <head>
     <meta charset="utf-8">
     <title>pi6tov</title>
-    <link rel="stylesheet" href="style.css">
+    <base href=".">
     <style>
       *{margin: 0; padding: 0; overflow: hidden}
     </style>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png">
+    <link rel="manifest" href="/fav/site.webmanifest">
   </head>
   <body>
-    <canvas id="canvas"> </body>
+    <canvas id="canvas"> 
+
+    <!-- scripts -->
+
     <script src="script.js"></script>
+
+    <!-- addons -->
+    <script src="./game/classes/Thing.js"></script>
+    <script src="./game/classes/ChangableState.js"></script>
+    <script src="./game/classes/ChangeOnCollision.js"></script>
+    <script src="./game/classes/Candle.js"></script>
+    <script src="./game/classes/Item.js"></script>
+    <script src="./game/classes/Entity.js"></script>
+    <script src="./game/classes/FinishLine.js"></script>
+    <script src="./game/classes/Movable.js"></script>
+    <script src="./game/classes/Player.js"></script>
+    <script src="./game/classes/Spike.js"></script>
+    <script src="./game/classes/Unmovable.js"></script>
+    <script src="./game/classes/Level.js"></script>
+
     <script src="./game/game.js"></script>
+
+
+  </body>
 </html>
