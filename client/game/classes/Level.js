@@ -88,30 +88,153 @@ class Level {
 
     setup(levelNumber) {
         switch (levelNumber) {
-            case 0:
-                this.addUnmovable(200, 100, 70, 70, "./game/images/box.png");
-                this.addUnmovable(200, 240, 70, 70, "./game/images/box.png");
+            case 0:                
+        	this.addItem(200, 200, 20, 20, "./game/images/egg.png");
+        	this.addItem(200, 200, 20, 20, "./game/images/egg.png");
+        	this.addItem(200, 200, 20, 20, "./game/images/egg.png");
+        	this.addItem(200, 200, 20, 20, "./game/images/egg.png");
 
-                this.addMovable(300, 100, 70, 70, "./game/images/box.png");
-                this.addMovable(400, 100, 70, 70, "./game/images/box.png");
-                this.addMovable(300, 100, 70, 70, "./game/images/box.png");
-
-                this.addItem(500, 190, 30, 30, "./game/images/egg.png");
-                
-                this.addSpike(400, 200, 70, 70, "./game/images/spike-on.png", "./game/images/spike-off.png", 300);
-
-                this.addCandle(600, 100, 70, 70, "./game/images/candle-green-on.png", "./game/images/candle-green-off.png", true);
-                this.addCandle(700, 100, 70, 70, "./game/images/candle-red-on.png", "./game/images/candle-red-off.png", false);
-                this.addCandle(800, 100, 70, 70, "./game/images/candle-pink-on.png", "./game/images/candle-pink-off.png", false);
-
-
-                
-                this.addFinishLine(600, 290, 70, 70, "./game/images/flag.png", 0);
+                this.addFinishLine(600, 200, 70, 70, "./game/images/flag.png", 1);
                 
                 this.addPlayer(100, 100, 70, 70, "./game/images/player.png");
 
                 break;
-        }
+
+	    case 1:
+
+		this.addUnmovable(200, -300, 100, 100, "./game/images/metal-box.png");
+		this.addMovable(200, -200, 100, 100, "./game/images/box.png");
+		this.addUnmovable(200, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 300, 100, 100, "./game/images/metal-box.png");
+		this.addMovable(200, 400, 100, 100, "./game/images/box.png");
+		this.addUnmovable(200, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 600, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 700, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 800, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 900, 100, 100, "./game/images/metal-box.png");
+
+		this.addItem(400, 200, 60, 80, "./game/images/whipped-cream.png");
+
+		this.addFinishLine(600, 500, 70, 70, "./game/images/flag.png", 2);
+
+		this.addPlayer(-100, 200, 70, 70, "./game/images/player.png");
+
+		break;
+
+	    case 2:
+		
+		this.addUnmovable(-100, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(-100, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(-100, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(0, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(100, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(0, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(100, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, -200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(300, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(500, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(700, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, -300, 100, 100, "./game/images/metal-box.png");
+		this.addMovable(600, -290, 100, 100, "./game/images/box.png");
+		this.addUnmovable(400, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(500, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 400, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(300, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(500, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(500, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(700, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, 400, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(700, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(500, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(700, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(900, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1300, -100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1300, -200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1300, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(900, -300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 400, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, 400, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1200, 0, 100, 100, "./game/images/metal-box.png");
+
+		this.addItem(710, 210, 80, 80, "./game/images/butter.png");
+
+		this.addFinishLine(1110, 400, 70, 70, "./game/images/flag.png", 3);
+
+		this.addPlayer(10, 10, 70, 70, "./game/images/player.png");
+
+		break;
+
+	    case 3:
+		//up
+		this.addUnmovable(0, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(100, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(200, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(300, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(400, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(500, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(600, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(700, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(800, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(900, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1000, 0, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 0, 100, 100, "./game/images/metal-box.png");
+
+		//right
+		this.addUnmovable(1100, 100, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 200, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 300, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 400, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 500, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 600, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 700, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 800, 100, 100, "./game/images/metal-box.png");
+		this.addUnmovable(1100, 900, 100, 100, "./game/images/metal-box.png");
+
+		this.addPlayer(0, 0, 70, 70, "./game/images/player.png");
+
+	}
     }       
 }
 
