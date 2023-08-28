@@ -1,5 +1,9 @@
 document.title = "Make the Cake"
-let level = new Level(0);
+
+let levelNumber = +localStorage.getItem("level");
+if(levelNumber === null)  levelNumber = 0;
+
+let level = new Level(levelNumber);
 
 console.table(level);
 

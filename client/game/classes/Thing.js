@@ -26,6 +26,8 @@ class Thing {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+    update(){};
+
     unmovableCollision(elem) {
         if(this != elem) {
             if(this.isColliding(elem)) {
@@ -41,5 +43,5 @@ class Thing {
             }
         }
     }
-
+    
 }

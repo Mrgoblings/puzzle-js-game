@@ -13,6 +13,7 @@ class Spike extends ChangableState {
             this.changeState();
 
         level.objects.forEach((elem, index) => {
+            if(elem.type == "spike") return;
             if(this.isColliding(elem)) {
                 if(this.state) {
                     if(elem.type == "player") {

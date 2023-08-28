@@ -101,6 +101,19 @@ function loadImage(src) {
 }
 
 
+function loadAudio(src) {
+    let audio = new Audio(src);
+
+    (async () => {
+        await new Promise((resolve) => {
+            audio.addEventListener('canplaythrough', () => resolve());
+        });    
+    })();
+    
+    return audio;
+}
+
+
 function areColliding(obj1_X, obj1_Y, obj1_Width, obj1_Height, obj2_X, obj2_Y, obj2_Width, obj2_Height) {
     return (obj2_X <= obj1_X + obj1_Width) && (obj1_X <= obj2_X + obj2_Width) && (obj2_Y <= obj1_Y + obj1_Height) && (obj1_Y <= obj2_Y + obj2_Height); 
 }
